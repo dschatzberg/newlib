@@ -32,7 +32,7 @@
 
 #if (defined(__CR16__) || defined(__CR16C__) ||defined(__CR16CP__))
 #ifndef __INT32__
-#define __SMALL_BITFIELDS      
+#define __SMALL_BITFIELDS
 #undef INT_MAX
 #undef UINT_MAX
 #define INT_MAX 32767
@@ -90,6 +90,10 @@
 /* we use some glibc header files so turn on glibc large file feature */
 #define _LARGEFILE64_SOURCE 1
 #endif
+#endif
+
+#if defined(__ebbrt__)
+#define __DYNAMIC_REENT__
 #endif
 
 #ifdef __mn10200__
