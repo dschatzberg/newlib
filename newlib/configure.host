@@ -385,7 +385,7 @@ case "${host}" in
   d30v*)
 	sys_dir=
 	;;
-  x86_64-*-ebbrt*)
+  *-*-ebbrt*)
         newlib_cflags="${newlib_cflags} -DREENTRANT_SYSCALLS_PROVIDED"
         newlib_cflags="${newlib_cflags} -DMISSING_SYSCALL_NAMES"
         sys_dir=ebbrt
