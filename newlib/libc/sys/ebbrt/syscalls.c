@@ -25,8 +25,11 @@ extern int ebbrt_newlib_fstat(int, struct stat *);
 extern int ebbrt_newlib_stat(const char *, struct stat *);
 extern int ebbrt_newlib_unlink(char *);
 extern int ebbrt_newlib_write(int, char *, int);
-extern caddr_t ebbrt_newlib_sbrk(int);
 extern int ebbrt_newlib_gettimeofday(struct timeval *, void *);
+extern void* ebbrt_newlib_malloc(size_t);
+extern void ebbrt_newlib_free(void*);
+extern void* ebbrt_newlib_realloc(void*, size_t);
+extern void* ebbrt_newlib_calloc(size_t, size_t);
 
 int _exit(int val)
 {
@@ -113,12 +116,47 @@ int write(int file, char *ptr, int len)
   return ebbrt_newlib_write(file, ptr, len);
 }
 
-caddr_t sbrk(int incr)
-{
-  return ebbrt_newlib_sbrk(incr);
-}
-
 int gettimeofday(struct timeval *p, void *z)
 {
   return ebbrt_newlib_gettimeofday(p, z);
+}
+
+void* malloc(size_t size)
+{
+  return ebbrt_newlib_malloc(size);
+}
+
+void* _malloc_r(struct _reent *r, size_t size)
+{
+  return malloc(size);
+}
+
+void free(void* ptr)
+{
+  ebbrt_newlib_free(ptr);
+}
+
+void _free_r(struct _reent *r, void* ptr)
+{
+  return free(ptr);
+}
+
+void* realloc(void* ptr, size_t size)
+{
+  return ebbrt_newlib_realloc(ptr, size);
+}
+
+void* _realloc_r(struct _reent *r, void* ptr, size_t size)
+{
+  return realloc(ptr, size);
+}
+
+void* calloc(size_t num, size_t size)
+{
+  return ebbrt_newlib_calloc(num, size);
+}
+
+void* _calloc_r(struct _reent *r, size_t num, size_t size)
+{
+  return calloc(num,size);
 }
